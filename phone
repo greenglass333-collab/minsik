@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캐릭터 휴대폰 엿보기</title>
+    <style>
+        /* 폰트 및 기본 리셋 */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #2c2c2c; /* 배경 (전시장 화면 밖) */
+        }
+
+        /* 아이폰 화면 틀 */
+        .iphone-frame {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            background-image: url('back.png'); /* 1. 배경화면 변경하는 곳 */
+            background-size: cover;
+            background-position: center;
+            border-radius: 50px;
+            border: 8px solid #111;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 상단 상태바 & 다이내믹 아일랜드 */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 25px 0 25px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .dynamic-island {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 35px;
+            background-color: black;
+            border-radius: 20px;
+        }
+
+        /* 홈 화면 어플 그리드 (4칸 배열) */
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 15px 10px;
+            padding: 40px 20px;
+            flex-grow: 1;
+            align-content: start;
+        }
+
+        /* 어플 공통 스타일 */
+        .app-link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .app-name {
+            color: white;
+            font-size: 11px;
+            margin-top: 5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        /* 음악 위젯 (2x2 크기) */
+        .music-widget {
+            grid-column: span 2;
+            grid-row: span 2;
+            background-color: rgba(40, 40, 40, 0.85);
+            border-radius: 22px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+        .music-widget-album {
+            width: 50px;
+            height: 50px;
+            background-image: url('aaa.png'); /* 음악 위젯 앨범 사진 */
+            background-size: cover;
+            border-radius: 8px;
+        }
+        .music-widget-text {
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .music-widget-sub {
+            color: #aaa;
+            font-size: 11px;
+        }
+
+        /* 하단 검색 버튼 */
+        .search-pill {
+            margin: 0 auto 15px auto;
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            width: fit-content;
+        }
+
+        /* 하단 독 (Dock) */
+        .dock {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            margin: 0 15px 15px 15px;
+            border-radius: 30px;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 10px;
+        }
+        .dock .app-name {
+            display: none; /* 독에서는 어플 이름이 보이지 않음 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="iphone-frame">
+    <!-- 상단 상태바 -->
+    <div class="status-bar">
+        <span>14:14</span>
+        <div class="dynamic-island"></div>
+        <span>LTE 🔋</span>
+    </div>
+
+    <!-- 배경 홈 화면 -->
+    <div class="home-grid">
+        
+        <!-- 1. 음악 위젯 (클릭 시 music.html 로 이동) -->
+        <a href="music.html" class="music-widget">
+            <div style="display: flex; justify-content: space-between;">
+                <div class="music-widget-album"></div>
+                <span style="color:white; font-size: 18px;">🎵</span>
+            </div>
+            <div>
+                <div class="music-widget-text">LooTs</div>
+                <div class="music-widget-sub">LUR</div>
+            </div>
+        </a>
+
+        <!-- 5. 디씨인사이드 -->
+        <a href="dcinside.html" class="app-link">
+            <div class="app-icon" style="background-image: url('dc.png');"></div>
+            <div class="app-name">디시인사이드</div>
+        </a>
+
+        <!-- 6. 네이버 -->
+        <a href="naver.html" class="app-link">
+            <div class="app-icon" style="background-image: url('naver.png');"></div>
+            <div class="app-name">네이버</div>
+        </a>
+
+        <!-- 7. X (구 트위터) -->
+        <a href="twitter.html" class="app-link">
+            <div class="app-icon" style="background-image: url('X.png');"></div>
+            <div class="app-name">X</div>
+        </a>
+
+        <!-- 8. 인스타그램 -->
+        <a href="instagram.html" class="app-link">
+            <div class="app-icon" style="background-image: url('insta.jpg');"></div>
+            <div class="app-name">Instagram</div>
+        </a>
+    </div>
+
+    <!-- 하단 검색창 -->
+    <div class="search-pill">🔍 검색</div>
+
+    <!-- 하단 고정 독(Dock) -->
+    <div class="dock">
+        <!-- 2. 전화 -->
+        <a href="phone.html" class="app-link">
+            <div class="app-icon" style="background-image: url('call.png');"></div>
+        </a>
+        
+        <!-- 3. 문자 -->
+        <a href="message.html" class="app-link">
+            <div class="app-icon" style="background-image: url('mas.jpg');"></div>
+        </a>
+
+        <!-- 4. 카카오톡 -->
+        <a href="kakaotalk" class="app-link">
+            <div class="app-icon" style="background-image: url('kakao.png');"></div>
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
